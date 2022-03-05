@@ -285,62 +285,80 @@ export class WebGLMap {
     });
   }
 
-  public generateMapImage(width: number, height: number) {
+  public generateMapImage() {
+    let data = this.generateMapImageLeft();
+    return data;
+  }
+
+  private generateMapImageLeft() {
     const gl = this.gl;
 
+
+    // Create framebuffer
     let fb = gl.createFramebuffer();
     let fbTexture = <WebGLTexture>gl.createTexture();
-    setupFramebufferTexture(gl, fbTexture, width, height);
+    setupFramebufferTexture(gl, fbTexture, SPLIT_IMG_PADDED_WIDTH, IMG_HEIGHT);
     gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
     gl.framebufferTexture2D(
-      gl.FRAMEBUFFER,
-      gl.COLOR_ATTACHMENT0,
-      gl.TEXTURE_2D,
-      fbTexture,
-      0
+        gl.FRAMEBUFFER,
+        gl.COLOR_ATTACHMENT0,
+        gl.TEXTURE_2D,
+        fbTexture,
+        0
     );
     gl.bindTexture(gl.TEXTURE_2D, fbTexture);
 
-    gl.viewport(0, 0, width, height);
-    gl.clearColor(0.0, 0.0, 0, 0.0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
 
-    this.glResources.resizeXbrGeometry(width);
+    // Prepare framebuffer
+    gl.viewport(0, 0, SPLIT_IMG_PADDED_WIDTH, IMG_HEIGHT);
+    gl.clearColor(0.0, 0.0, 0, 0.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+
+    // Set xbr parameters. These are fixed as we don't want the map zoom levels to influence the result
+    this.glResources.resizeXbrGeometry(SPLIT_IMG_PADDED_WIDTH);
     this.glResources.xbrShaderProgram.use();
     this.glResources.xbrShaderProgram.setFocusPoint([0, 0]);
     this.glResources.xbrShaderProgram.setScale(1.0);
     this.glResources.xbrShaderProgram.setMaxScale(
-      this.maxViewWidth / IMG_WIDTH
+        this.maxViewWidth / IMG_WIDTH
     );
-    this.glResources.xbrShaderProgram.setResolution(width, height);
+    this.glResources.xbrShaderProgram.setResolution(SPLIT_IMG_PADDED_WIDTH, IMG_HEIGHT);
     this.glResources.xbrShaderProgram.setFlipY(true);
     this.glResources.xbrShaderProgram.setRenderTerrain(this.renderTerrain);
     this.glResources.xbrShaderProgram.setTextureSize(
-      IMG_PADDED_WIDTH,
-      IMG_HEIGHT
+        IMG_PADDED_WIDTH,
+        IMG_HEIGHT
     );
     this.glResources.xbrShaderProgram.setUsedTextureSize(IMG_WIDTH, IMG_HEIGHT);
     this.glResources.xbrShaderProgram.setTextures(this.glResources);
 
+
+    // Render
     gl.bindVertexArray(this.glResources.xbrVao);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     gl.bindVertexArray(null);
 
+
+    //Cleanup
     this.glResources.xbrShaderProgram.clear();
     gl.bindTexture(gl.TEXTURE_2D, null);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.flush();
 
-    let data = new Uint8ClampedArray(width * height * 4);
+
+    // Read framebuffer
+    let data = new Uint8ClampedArray(SPLIT_IMG_PADDED_WIDTH * IMG_HEIGHT * 4);
     gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
-    gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, data, 0);
+    gl.readPixels(0, 0, SPLIT_IMG_PADDED_WIDTH, IMG_HEIGHT, gl.RGBA, gl.UNSIGNED_BYTE, data, 0);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     return data;
   }
 
-  public mapData(scale: number, type?: string): Promise<Blob | null> {
-    const width = IMG_WIDTH * scale;
-    const height = IMG_HEIGHT * scale;
-    const data = this.generateMapImage(width, height);
+  public mapData(type?: string): Promise<Blob | null> {
+    const width = SPLIT_IMG_PADDED_WIDTH;
+    const height = IMG_HEIGHT;
+    const data = this.generateMapImage();
     const pngCanvas = document.createElement("canvas");
 
     pngCanvas.width = width;

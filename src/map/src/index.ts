@@ -326,25 +326,17 @@ async function main() {
     }
   }
 
-  function exporter(scale: number) {
+  function exporter() {
     return async () => {
       const extension = exportType();
-      const data = await map.mapData(scale, `image/${extension}`);
+      const data = await map.mapData(`image/${extension}`);
       downloadImage(data, extension);
     };
   }
 
   document
     .querySelector("#btn-full-export-1x")!
-    .addEventListener("click", exporter(1));
-
-  document
-    .querySelector("#btn-full-export-2x")!
-    .addEventListener("click", exporter(2));
-
-  document
-    .querySelector("#btn-full-export-3x")!
-    .addEventListener("click", exporter(3));
+    .addEventListener("click", exporter());
 
   const storedMapMode = localStorage.getItem("mapMode");
   const storedShowProvinceBorders = localStorage.getItem("showProvinceBorders");
