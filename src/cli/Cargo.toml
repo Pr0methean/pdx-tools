@@ -25,7 +25,7 @@ clap = { version = "4.1", features = ["derive", "env"] }
 csv = { version = "1.1" }
 env_logger = "0.9"
 eu4game = { path = "../eu4game", optional = true, default-features = false, features = ["libdeflate"] }
-eu4save = { git = "https://github.com/rakaly/eu4save.git", default-features = false, features = ["serialize", "libdeflate"], optional = true }
+eu4save = { git = "https://github.com/rakaly/eu4save.git", default-features = false, features = ["serialize", "libdeflate"], optional = true, branch = "raw" }
 filetime = "0.2"
 flate2 = { version = "1.0", optional = true }
 jomini = { version = "0.21", optional = true }

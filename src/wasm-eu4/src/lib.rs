@@ -2752,8 +2752,6 @@ fn melt_tar(tsave: TarSave) -> Result<js_sys::Uint8Array, Box<dyn std::error::Er
 
 #[wasm_bindgen]
 pub fn melt(data: &[u8]) -> Result<js_sys::Uint8Array, JsValue> {
-    // let melter = eu4save::Melter::new().with_on_failed_resolve(FailedResolveStrategy::Ignore);
-
     if let Some(tsave) = tarsave::extract_tarsave(data) {
         melt_tar(tsave).map_err(|e| JsValue::from_str(e.to_string().as_str()))
     } else {
@@ -2799,4 +2797,14 @@ pub fn download_transformation(data: &[u8]) -> Vec<u8> {
         out_zip.write_all(file_data).unwrap();
     }
     out_zip.finish().unwrap().into_inner()
+}
+
+#[wasm_bindgen]
+pub fn compress(data: &[u8], f: &js_sys::Function) -> Result<Vec<u8>, JsValue> {
+    wasm_compress::compress_cb(data, f)
+}
+
+#[wasm_bindgen]
+pub fn http_upload_headers(data: &[u8]) -> String {
+    wasm_compress::http_upload_headers(data)
 }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { useBrotli } from "@/features/brotli";
+import { useCompression } from "@/features/compress";
 import {
   useWasmWorker,
   getWasmWorker,
@@ -130,7 +130,7 @@ interface UploadFormValues {
 
 export const useFileUpload = () => {
   const workerRef = useWasmWorker();
-  const brotli = useBrotli();
+  const compressor = useCompression();
   const { dispatch } = useUpload();
   const uploadRequestRef = useRef<XMLHttpRequest | undefined>(undefined);
   const filename = useSelector(selectAnalyzeFileName);
@@ -151,15 +151,15 @@ export const useFileUpload = () => {
       dispatch({ kind: "progress", progress: 10 });
 
       const compressProgress = (portion: number) => {
-        const progress = 10 + (portion * 100) / (100 / (50 - 10));
+        const progress = 10 + (portion * 100) / (100 / (40 - 10));
         dispatch({ kind: "progress", progress });
       };
 
-      const fileData = await brotli.compress(
+      const fileData = await compressor.compress(
         new Uint8Array(rawFileData),
         compressProgress
       );
-      dispatch({ kind: "progress", progress: 50 });
+      dispatch({ kind: "progress", progress: 40 });
 
       const blob = new Blob([fileData.data], {
         type: fileData.contentType,
@@ -182,7 +182,7 @@ export const useFileUpload = () => {
 
       request.upload.addEventListener("progress", function (e) {
         const percent_complete = (e.loaded / e.total) * 100;
-        dispatch({ kind: "progress", progress: 50 + percent_complete / 2 });
+        dispatch({ kind: "progress", progress: 40 + percent_complete / 2 });
       });
 
       const completeRequest = () => {
@@ -221,6 +221,6 @@ export const useFileUpload = () => {
 
       request.send(data);
     },
-    [workerRef, brotli, uploadRequestRef, dispatch, filename]
+    [workerRef, compressor, uploadRequestRef, dispatch, filename]
   );
 };

@@ -41,6 +41,8 @@ import { getRawData } from "../storage";
 import { LedgerDataRaw, workLedgerData } from "../../../eu4/utils/ledger";
 import { expandLosses } from "../../../eu4/utils/losses";
 import { eu4GetMeta, eu4GetSaveFile, loadedSave } from "./common";
+import { CompressProgressCb } from "@/features/compress";
+import { compress_data } from "@/features/compress/compress-worker";
 
 let provinceIdToColorIndex = new Uint16Array();
 
@@ -339,4 +341,8 @@ export async function eu4DownloadData(): Promise<Uint8Array> {
   } else {
     return data;
   }
+}
+
+export function compress(data: Uint8Array, cb: CompressProgressCb) {
+  return compress_data(wasmModule, data, cb);
 }

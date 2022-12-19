@@ -6,6 +6,7 @@ use std::convert::TryInto;
 
 mod hasher;
 mod parser;
+mod storage;
 
 #[napi]
 pub fn parse_file(path: String) -> AsyncTask<FileParser> {
@@ -15,6 +16,11 @@ pub fn parse_file(path: String) -> AsyncTask<FileParser> {
 #[napi]
 pub fn file_checksum(path: String) -> AsyncTask<FileHasher> {
     AsyncTask::new(FileHasher { path })
+}
+
+#[napi]
+pub fn universal_save(path: String) -> AsyncTask<storage::UniversalContainer> {
+    AsyncTask::new(storage::UniversalContainer { path })
 }
 
 #[napi]

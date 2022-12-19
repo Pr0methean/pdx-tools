@@ -140,7 +140,6 @@ build-wasm: build-wasm-dev
     mv "$MY_TMP" "$1"
   }
 
-  optimize src/wasm-br/pkg/wasm_br_bg.wasm &
   optimize src/wasm-ck3/pkg/wasm_ck3_bg.wasm &
   optimize src/wasm-eu4/pkg/wasm_eu4_bg.wasm &
   optimize src/wasm-hoi4/pkg/wasm_hoi4_bg.wasm &
@@ -149,7 +148,6 @@ build-wasm: build-wasm-dev
   wait
 
 build-wasm-dev:
-  wasm-pack build -t web src/wasm-br
   wasm-pack build -t web src/wasm-ck3
   wasm-pack build -t web src/wasm-eu4
   wasm-pack build -t web src/wasm-hoi4

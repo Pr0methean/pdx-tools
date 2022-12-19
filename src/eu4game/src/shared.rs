@@ -1,5 +1,6 @@
 use crate::Eu4GameError;
 use eu4save::{
+    file::{Eu4Binary, Eu4ParsedFileKind, Eu4Text},
     models::{CountryEvent, Eu4Save, GameState, Meta, Monarch},
     query::Query,
     Encoding, Eu4Date, Eu4File,
@@ -196,6 +197,25 @@ where
         };
 
         Ok((Eu4Save { meta, game }, encoding))
+    } else if let Ok(save) = asar_save::AsarArchive::try_parse(data) {
+        let mut zip_sink = Vec::new();
+        let meta_file = Eu4File::from_slice(save.file_data("meta").unwrap())?;
+        let parsed_meta = meta_file.parse(&mut zip_sink)?;
+
+        match parsed_meta.kind() {
+            Eu4ParsedFileKind::Text(meta) => {
+                let meta: Meta = meta.deserialize()?;
+                let gamestate_file = Eu4Text::from_raw(save.file_data("gamestate").unwrap())?;
+                let game: GameState = gamestate_file.deserialize()?;
+                Ok((Eu4Save { meta, game }, Encoding::TextZip))
+            }
+            Eu4ParsedFileKind::Binary(meta) => {
+                let meta: Meta = meta.deserializer().build(resolver)?;
+                let gamestate_file = Eu4Binary::from_raw(save.file_data("gamestate").unwrap())?;
+                let game: GameState = gamestate_file.deserializer().build(resolver)?;
+                Ok((Eu4Save { meta, game }, Encoding::BinaryZip))
+            }
+        }
     } else {
         let file = Eu4File::from_slice(data)?;
         if file.size() > 300 * 1024 * 1024 {

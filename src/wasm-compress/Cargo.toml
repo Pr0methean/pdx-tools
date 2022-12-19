@@ -1,19 +1,12 @@
 [package]
-name = "wasm-br"
+name = "wasm-compress"
 version = "0.1.0"
 authors = ["Nick Babcock <nbabcock19@hotmail.com>"]
 edition = "2021"
 publish = false
 
-[lib]
-crate-type = ["cdylib", "rlib"]
-
 [dependencies]
 wasm-bindgen = { version = "0.2" }
-brotli = "3"
 zip = { version = "0.6", default-features = false, features = ["deflate"] }
-tar = "0.4"
 js-sys = "0.3"
-
-[package.metadata.wasm-pack.profile.release]
-wasm-opt = false
+flate2 = "1.0"

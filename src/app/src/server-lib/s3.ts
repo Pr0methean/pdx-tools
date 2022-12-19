@@ -59,24 +59,19 @@ const sizeHistogram = new metrics.Histogram({
 });
 
 export async function uploadFileToS3(
-  filePath: string,
-  filename: string,
-  upload: UploadType
+  data: Uint8Array,
+  filename: string
 ): Promise<void> {
-  const contentEncoding = uploadContentEncoding(upload);
-  const contentType = uploadContentType(upload);
-
   const end = timeHistogram.startTimer();
-  const { size: bytes } = await fs.promises.stat(filePath);
-  const stream = fs.createReadStream(filePath);
+  const bytes = data.byteLength;
 
   await s3client
     .putObject({
       Bucket: BUCKET,
       Key: filename,
-      Body: stream,
-      ContentType: contentType,
-      ContentEncoding: contentEncoding,
+      Body: data,
+      ContentType: "application/x-asar",
+      ContentEncoding: "br",
     })
     .promise();
 

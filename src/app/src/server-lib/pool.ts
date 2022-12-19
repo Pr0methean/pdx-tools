@@ -94,6 +94,10 @@ export function fileChecksum(path: string): Promise<string> {
   return nativeModule.exports.fileChecksum(path);
 }
 
+export function universalSave(path: string): Promise<ArrayBuffer> {
+  return nativeModule.exports.universalSave(path);
+}
+
 // https://stackoverflow.com/a/59787784/433785
 function isEmpty(obj: Record<number, Achievement>) {
   for (var i in obj) {

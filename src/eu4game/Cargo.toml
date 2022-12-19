@@ -16,6 +16,7 @@ jomini = { version = "0.21" }
 eu4save = { git = "https://github.com/rakaly/eu4save.git", default-features = false }
 schemas = { path = "../schemas", features = ["inline"] }
 tarsave = { path = "../tarsave" }
+asar-save = { path = "../asar-save", default-features = false }
 serde = { version = "1", features = ["derive"] }
 serde_path_to_error = "0.1"
 highway = "0.8"

@@ -8,7 +8,7 @@ import { pipeline } from "stream/promises";
 import path from "path";
 import { db } from "@/server-lib/db";
 import { log } from "@/server-lib/logging";
-import { fileChecksum, parseFile } from "@/server-lib/pool";
+import { fileChecksum, parseFile, universalSave } from "@/server-lib/pool";
 import { uploadFileToS3 } from "@/server-lib/s3";
 import { ValidationError } from "@/server-lib/errors";
 import { createBrotliDecompress, createGunzip } from "zlib";
@@ -17,6 +17,7 @@ import { withCoreMiddleware } from "@/server-lib/middlware";
 import { getOptionalString, getString } from "@/server-lib/valiation";
 import { deduceUploadType, UploadType } from "@/server-lib/models";
 import { nanoid } from "@reduxjs/toolkit";
+import { formatInt } from "@/lib/format";
 
 const tmpDir = process.env["TMPDIR"] || os.tmpdir();
 const upload = multer({ dest: tmpDir });
@@ -175,6 +176,17 @@ const handleUpload = async (
   }
 };
 
+const universalSaveFormat = async (requestPath: string, saveId: string) => {
+  const start = performance.now();
+  const data = await universalSave(requestPath);
+  log.info({
+    msg: "encoded universal format",
+    key: saveId,
+    elapsedMs: (performance.now() - start).toFixed(0),
+  });
+  return data;
+};
+
 const handler = async (req: NextSessionRequest, res: NextApiResponse) => {
   const uid = req.sessionUid;
   const [requestPath, metadata] = await handleUpload(req, res);
@@ -182,6 +194,7 @@ const handler = async (req: NextSessionRequest, res: NextApiResponse) => {
 
   try {
     const saveId = nanoid();
+    const saveContainerTask = universalSaveFormat(requestPath, saveId);
     savePath = await unwrapSave(requestPath, metadata.uploadType);
     const checksum = await fileChecksum(savePath);
 
@@ -200,7 +213,8 @@ const handler = async (req: NextSessionRequest, res: NextApiResponse) => {
       throw new ValidationError(`unsupported patch: ${out.patch_shorthand}`);
     }
 
-    await uploadFileToS3(requestPath, saveId, metadata.uploadType);
+    const saveContainer = new Uint8Array(await saveContainerTask);
+    await uploadFileToS3(saveContainer, saveId);
 
     await db.save.create({
       data: {

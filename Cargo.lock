@@ -51,8 +51,9 @@ checksum = "2cb2f989d18dd141ab8ae82f64d1a8cdd37e0840f73a406896cf5e99502fab61"
 name = "applib"
 version = "0.1.0"
 dependencies = [
+ "asar-save",
  "eu4game",
- "eu4save",
+ "eu4save 0.8.2 (git+https://github.com/rakaly/eu4save.git?branch=raw)",
  "memmap",
  "serde",
  "thiserror",
@@ -69,6 +70,18 @@ dependencies = [
  "napi-derive",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "asar-save"
+version = "0.1.0"
+dependencies = [
+ "brotli",
+ "flate2",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "zip",
 ]
 
 [[package]]
@@ -620,7 +633,7 @@ name = "ck3save"
 version = "0.4.3"
 source = "git+https://github.com/rakaly/ck3save.git#ce62180f5a067fe0dd0c071373ccd60a8d914e66"
 dependencies = [
- "jomini",
+ "jomini 0.21.0",
  "libdeflater",
  "miniz_oxide",
  "serde",
@@ -974,11 +987,12 @@ dependencies = [
 name = "eu4game"
 version = "0.1.0"
 dependencies = [
+ "asar-save",
  "attohttpc",
  "base64 0.13.1",
- "eu4save",
+ "eu4save 0.8.2 (git+https://github.com/rakaly/eu4save.git)",
  "highway",
- "jomini",
+ "jomini 0.21.0",
  "regex",
  "schemas",
  "serde",
@@ -992,9 +1006,23 @@ dependencies = [
 [[package]]
 name = "eu4save"
 version = "0.8.2"
+source = "git+https://github.com/rakaly/eu4save.git?branch=raw#df1abcd170e41f319f2799e6a751adcb6b567989"
+dependencies = [
+ "jomini 0.20.3",
+ "libdeflater",
+ "miniz_oxide",
+ "once_cell",
+ "serde",
+ "thiserror",
+ "zip",
+]
+
+[[package]]
+name = "eu4save"
+version = "0.8.2"
 source = "git+https://github.com/rakaly/eu4save.git#088947ca38d8c832f34e3e5a06c80d7c4fc5ef87"
 dependencies = [
- "jomini",
+ "jomini 0.21.0",
  "libdeflater",
  "miniz_oxide",
  "once_cell",
@@ -1243,7 +1271,7 @@ name = "hoi4save"
 version = "0.3.2"
 source = "git+https://github.com/rakaly/hoi4save.git#f1589b96d62ab40c9f3ac792fff25703b5178304"
 dependencies = [
- "jomini",
+ "jomini 0.21.0",
  "serde",
  "thiserror",
 ]
@@ -1380,7 +1408,7 @@ name = "imperator-save"
 version = "0.4.2"
 source = "git+https://github.com/rakaly/imperator-save.git#b6f3f6fff0e5f9367ecef49ee027c38545169368"
 dependencies = [
- "jomini",
+ "jomini 0.21.0",
  "libdeflater",
  "miniz_oxide",
  "serde",
@@ -1458,6 +1486,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "068b1ee6743e4d11fb9c6a1e6064b3693a1b600e7f5f5988047d98b3dc9fb90b"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "jomini"
+version = "0.20.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "33027309e9ec84d5d56cd4ecfa09c88ace7e0951fada7745ff2350af9d5ec6e2"
+dependencies = [
+ "jomini_derive",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -1859,10 +1898,10 @@ dependencies = [
  "csv",
  "env_logger",
  "eu4game",
- "eu4save",
+ "eu4save 0.8.2 (git+https://github.com/rakaly/eu4save.git?branch=raw)",
  "filetime",
  "flate2",
- "jomini",
+ "jomini 0.21.0",
  "log",
  "oxipng",
  "regex",
@@ -2223,10 +2262,10 @@ name = "schemas"
 version = "0.1.0"
 dependencies = [
  "criterion",
- "eu4save",
+ "eu4save 0.8.2 (git+https://github.com/rakaly/eu4save.git?branch=raw)",
  "flatbuffers",
  "flatc-rust",
- "jomini",
+ "jomini 0.21.0",
  "rand",
 ]
 
@@ -2802,7 +2841,7 @@ name = "vic3save"
 version = "0.1.0"
 dependencies = [
  "attohttpc",
- "jomini",
+ "jomini 0.21.0",
  "libdeflater",
  "miniz_oxide",
  "serde",
@@ -2934,22 +2973,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "wasm-br"
-version = "0.1.0"
-dependencies = [
- "brotli",
- "js-sys",
- "tar",
- "wasm-bindgen",
- "zip",
-]
-
-[[package]]
 name = "wasm-ck3"
 version = "0.1.0"
 dependencies = [
  "ck3save",
- "jomini",
+ "jomini 0.21.0",
  "js-sys",
  "schemas",
  "serde",
@@ -2958,12 +2986,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "wasm-compress"
+version = "0.1.0"
+dependencies = [
+ "flate2",
+ "js-sys",
+ "wasm-bindgen",
+ "zip",
+]
+
+[[package]]
 name = "wasm-eu4"
 version = "0.1.0"
 dependencies = [
  "eu4game",
- "eu4save",
- "jomini",
+ "eu4save 0.8.2 (git+https://github.com/rakaly/eu4save.git?branch=raw)",
+ "jomini 0.21.0",
  "js-sys",
  "once_cell",
  "schemas",
@@ -2973,6 +3011,7 @@ dependencies = [
  "tarsave",
  "wasm-bindgen",
  "wasm-bindgen-test",
+ "wasm-compress",
  "zip",
 ]
 
@@ -2981,7 +3020,7 @@ name = "wasm-hoi4"
 version = "0.1.0"
 dependencies = [
  "hoi4save",
- "jomini",
+ "jomini 0.21.0",
  "js-sys",
  "schemas",
  "serde",
@@ -2994,7 +3033,7 @@ name = "wasm-imperator"
 version = "0.1.0"
 dependencies = [
  "imperator-save",
- "jomini",
+ "jomini 0.21.0",
  "js-sys",
  "schemas",
  "serde",
@@ -3006,7 +3045,7 @@ dependencies = [
 name = "wasm-vic3"
 version = "0.1.0"
 dependencies = [
- "jomini",
+ "jomini 0.21.0",
  "js-sys",
  "schemas",
  "serde",
