@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $# -ne 2 ]]; then
-    echo "Invalid number of arguments. Usage: install_wsl.sh <Windows EU4 installation directory> <Installation EU4 version>"
-    exit
-fi
-
-if [[ "$EUID" -ne 0 ]]; then
-    echo "Not root! Run as root"
+    echo "Invalid number of arguments. Usage: sudo install_wsl.sh <Windows EU4 installation directory> <Installation EU4 version>"
     exit
 fi
 
@@ -17,14 +12,14 @@ if [[ $? -ne 0 ]]; then
 fi
 
 set -e
-apt-get update
+sudo apt-get update
 
 # Install misc packages
-apt-get install -y gcc g++ make imagemagick unzip libssl-dev pkg-config curl
+sudo apt-get install -y gcc g++ make imagemagick unzip libssl-dev pkg-config curl
 
 # Install node js
-curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
-apt-get install -y nodejs
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
 
 # Install rustup
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -32,6 +27,7 @@ source "$HOME/.cargo/env"
 
 # Install just
 cargo install just
+source "$HOME/.cargo/env"
 
 # Set up
 just setup
@@ -42,6 +38,5 @@ VERSION="$2"
 just pdx create-bundle "$EU4_DIR" assets/game-bundles
 just pdx compile-assets "assets/game-bundles/eu4-${VERSION}.tar.zst"
 
-# Start
-just dev
+echo "Success! Use 'just run' to start the development environment."
 

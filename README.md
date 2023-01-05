@@ -92,11 +92,35 @@ A quick intro into how the repo is structured.
 - **wasm-br**: Wasm package that takes in a byte array, brotli deflates it, and returns the deflated bytes. This is a standalone package due to how large brotli encoding consumes. Brotli encoding is used when users upload and since most users don't upload, we only want to pay the price to load the brotli module when needed. Maybe one day browsers will expose a JS api so we can use a native brotli deflate implementation.
 - **wasm-{{game}}**: Wasm packages dedicated to translating the Rust logic into a Wasm (ie: browser) environment. Each game is a separate package so that users don't need to pay the cost of downloading the logic for every game if they only ever analzye one game.
 
+## WSL Build Environment
+
+If you are running windows, you are still able to create a local development environment through WSL.
+To achieve that, first clone this repository on your Windows machine.
+Next, you need a WSL2 instance running Ubuntu or Debian with the Docker Desktop integration enabled.
+Then you should be able to successfully run the command inside the WSL instance:
+
+```bash
+./install_wsl.sh <Windows EU4 installation directory> <Installation EU4 version>
+```
+
+which will perform the necessary setup.
+For example, the command could look like this:
+
+```bash
+./install_wsl.sh "C:\Program Files (x86)\Steam\steamapps\common\Europa Universalis IV" "1.34"
+```
+
+Once the setup is completed, you should be able to run:
+
+```bash
+just dev
+```
+
 ## Manual Build Environment
 
 If not using vscode and the Dev Container, one can setup an environment manually.
 
-A Linux environment assumed (WSL on Windows untested but probably supported). The following applications must be installed in order to instantiate the dev environment.
+A Linux environment assumed. The following applications must be installed in order to instantiate the dev environment.
 
 - docker
 - docker-compose
