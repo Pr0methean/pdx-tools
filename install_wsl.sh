@@ -15,11 +15,12 @@ set -e
 sudo apt-get update
 
 # Install misc packages
-sudo apt-get install -y gcc g++ make imagemagick unzip libssl-dev pkg-config curl
+sudo apt-get install -y git gcc g++ make imagemagick unzip libssl-dev pkg-config curl
 
 # Install node js
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
-sudo apt-get install -y nodejs
+curl https://get.volta.sh | bash
+source "$HOME/.bashrc"
+volta install node
 
 # Install rustup
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
