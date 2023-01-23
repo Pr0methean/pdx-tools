@@ -1,9 +1,6 @@
-use serde::{Deserialize, Serialize};
-use std::{
-    collections::HashMap,
-};
 use crate::AsarArchive;
-
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct AsarFile {
@@ -17,7 +14,9 @@ pub struct AsarFile {
 
 impl AsarFile {
     pub fn data<'a>(&self, archive: &'a AsarArchive) -> Option<&'a [u8]> {
-        archive.data().get(self.offset as usize..(self.offset + self.size) as usize)
+        archive
+            .data()
+            .get(self.offset as usize..(self.offset + self.size) as usize)
     }
 }
 

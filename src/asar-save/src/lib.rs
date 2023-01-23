@@ -8,6 +8,6 @@ mod write;
 
 pub use asar::*;
 pub use errors::*;
+pub use read::*;
 #[cfg(feature = "write")]
 pub use write::*;
-pub use read::*;

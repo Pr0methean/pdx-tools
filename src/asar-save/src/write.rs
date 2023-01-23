@@ -1,6 +1,9 @@
-use std::{collections::HashMap, io::{Write, Cursor, self, Read}};
+use crate::{AsarError, AsarFile, AsarHeader, Game, Metadata};
 use flate2::read::DeflateDecoder;
-use crate::{Game, AsarHeader, Metadata, AsarError, AsarFile};
+use std::{
+    collections::HashMap,
+    io::{self, Cursor, Read, Write},
+};
 
 #[derive(Debug)]
 struct ZipEntry {

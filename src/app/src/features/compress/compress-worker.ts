@@ -7,7 +7,11 @@ interface WasmCompressor {
   http_upload_headers(data: Uint8Array): string;
 }
 
-export function compress_data(compressor: WasmCompressor, data: Uint8Array, cb: CompressProgressCb): CompressionPayload {
+export function compress_data(
+  compressor: WasmCompressor,
+  data: Uint8Array,
+  cb: CompressProgressCb
+): CompressionPayload {
   const start = performance.now();
   const startKb = (data.length / 1024).toFixed(0);
   const result = compressor.compress(data, cb);

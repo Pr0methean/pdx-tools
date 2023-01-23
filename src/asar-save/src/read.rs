@@ -1,4 +1,4 @@
-use crate::{AsarError, bytes::get_u32, AsarHeader};
+use crate::{bytes::get_u32, AsarError, AsarHeader};
 
 pub struct AsarArchive<'a> {
     header: AsarHeader,

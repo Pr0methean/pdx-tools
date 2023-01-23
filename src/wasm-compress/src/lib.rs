@@ -1,6 +1,6 @@
 use flate2::Compression;
-use wasm_bindgen::JsValue;
 use std::io::{Cursor, Read};
+use wasm_bindgen::JsValue;
 
 struct ProgressReader<'a, R> {
     reader: R,
