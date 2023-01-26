@@ -197,7 +197,10 @@ where
 
         Ok((Eu4Save { meta, game }, encoding))
     } else {
-        let file = Eu4File::from_slice(data)?;
+        let file_data = asar_save::AsarArchive::try_parse(data)
+            .map(|x| x.data())
+            .unwrap_or(data);
+        let file = Eu4File::from_slice(file_data)?;
         if file.size() > 300 * 1024 * 1024 {
             return Err(Eu4GameError::TooLarge(file.size()));
         }

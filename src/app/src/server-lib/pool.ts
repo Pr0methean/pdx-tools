@@ -94,8 +94,11 @@ export function fileChecksum(path: string): Promise<string> {
   return nativeModule.exports.fileChecksum(path);
 }
 
-export function universalSave(path: string): Promise<ArrayBuffer> {
-  return nativeModule.exports.universalSave(path);
+export function universalSave(
+  path: string,
+  filename: string
+): Promise<ArrayBuffer> {
+  return nativeModule.exports.universalSave(path, filename);
 }
 
 // https://stackoverflow.com/a/59787784/433785

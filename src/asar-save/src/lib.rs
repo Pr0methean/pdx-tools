@@ -3,6 +3,7 @@ mod bytes;
 mod errors;
 mod read;
 mod serde_utils;
+mod vec_pair;
 #[cfg(feature = "write")]
 mod write;
 

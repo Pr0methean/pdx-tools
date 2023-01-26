@@ -27,7 +27,11 @@ impl<'a> AsarArchive<'a> {
     }
 
     pub fn file_data(&'a self, file: &str) -> Option<&'a [u8]> {
-        let file = self.header.files.get(file)?;
+        let file = self
+            .header
+            .files
+            .iter()
+            .find_map(|(name, x)| (name == file).then_some(x))?;
         file.data(self)
     }
 

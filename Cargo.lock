@@ -1864,6 +1864,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "applib",
+ "asar-save",
  "attohttpc",
  "aws-config",
  "aws-sdk-s3",
@@ -1884,10 +1885,12 @@ dependencies = [
  "serde",
  "serde_json",
  "tar",
+ "tarsave",
  "tempfile",
  "tokio",
  "tokio-stream",
  "walkdir",
+ "zip",
  "zstd",
 ]
 
@@ -2974,6 +2977,7 @@ dependencies = [
 name = "wasm-eu4"
 version = "0.1.0"
 dependencies = [
+ "asar-save",
  "eu4game",
  "eu4save",
  "jomini",

@@ -176,9 +176,13 @@ const handleUpload = async (
   }
 };
 
-const universalSaveFormat = async (requestPath: string, saveId: string) => {
+const universalSaveFormat = async (
+  requestPath: string,
+  saveId: string,
+  filename: string
+) => {
   const start = performance.now();
-  const data = await universalSave(requestPath);
+  const data = await universalSave(requestPath, filename);
   log.info({
     msg: "encoded universal format",
     key: saveId,
@@ -194,7 +198,11 @@ const handler = async (req: NextSessionRequest, res: NextApiResponse) => {
 
   try {
     const saveId = nanoid();
-    const saveContainerTask = universalSaveFormat(requestPath, saveId);
+    const saveContainerTask = universalSaveFormat(
+      requestPath,
+      saveId,
+      metadata.filename
+    );
     savePath = await unwrapSave(requestPath, metadata.uploadType);
     const checksum = await fileChecksum(savePath);
 

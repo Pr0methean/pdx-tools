@@ -2,11 +2,15 @@ use napi::{Error, JsArrayBuffer, Task};
 
 pub struct UniversalContainer {
     pub path: String,
+    pub filename: String,
 }
 
 impl UniversalContainer {
     fn transcode(&self) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
-        Ok(applib::storage::to_universal_container(&self.path)?)
+        Ok(applib::storage::to_universal_container(
+            &self.path,
+            &self.filename,
+        )?)
     }
 }
 

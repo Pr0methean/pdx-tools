@@ -25,6 +25,7 @@ eu4game = { path = "../eu4game", default-features = false }
 schemas = { path = "../schemas" }
 tarsave = { path = "../tarsave" }
 wasm-compress = { path = "../wasm-compress" }
+asar-save = { path = "../asar-save" }
 tar = "0.4"
 zip = { version = "0.6", default-features = false, features = ["deflate"] }
 

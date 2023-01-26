@@ -1,9 +1,5 @@
-use std::{
-    collections::HashMap,
-    io::{Cursor, Write},
-};
-
-use asar_save::{AsarArchive, AsarDirectory, AsarEntry, AsarFile, AsarHeader, Game, Metadata};
+use asar_save::{AsarArchive, AsarFile, AsarHeader, Game, Metadata};
+use std::io::{Cursor, Write};
 
 struct ZipFile<'a> {
     name: &'a str,
@@ -59,38 +55,34 @@ fn test_eu4_txt_zip() {
     let asar_data = brotli_inflate(&out);
     let asar = AsarArchive::try_parse(&asar_data).unwrap();
 
-    let mut files = HashMap::new();
-    files.insert(
-        String::from("meta"),
-        AsarEntry::File(AsarFile {
-            offset: 0,
-            size: 21,
-        }),
-    );
-    files.insert(
-        String::from("gamestate"),
-        AsarEntry::File(AsarFile {
-            offset: 21,
-            size: 22,
-        }),
-    );
-    files.insert(
-        String::from("ai"),
-        AsarEntry::File(AsarFile {
-            offset: 43,
-            size: 18,
-        }),
-    );
-
-    let mut dir_files = HashMap::new();
-    dir_files.insert(
-        String::from("test.eu4"),
-        AsarEntry::Dir(AsarDirectory { files }),
-    );
+    let files = vec![
+        (
+            String::from("meta"),
+            AsarFile {
+                offset: 0,
+                size: 21,
+            },
+        ),
+        (
+            String::from("gamestate"),
+            AsarFile {
+                offset: 21,
+                size: 22,
+            },
+        ),
+        (
+            String::from("ai"),
+            AsarFile {
+                offset: 43,
+                size: 18,
+            },
+        ),
+    ];
 
     let meta = AsarHeader {
-        files: dir_files,
+        files,
         game: Game::Eu4,
+        filename: String::from("test.eu4"),
         ..Default::default()
     };
 

@@ -19,8 +19,8 @@ pub fn file_checksum(path: String) -> AsyncTask<FileHasher> {
 }
 
 #[napi]
-pub fn universal_save(path: String) -> AsyncTask<storage::UniversalContainer> {
-    AsyncTask::new(storage::UniversalContainer { path })
+pub fn universal_save(path: String, filename: String) -> AsyncTask<storage::UniversalContainer> {
+    AsyncTask::new(storage::UniversalContainer { path, filename })
 }
 
 #[napi]

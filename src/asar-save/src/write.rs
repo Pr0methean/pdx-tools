@@ -1,9 +1,6 @@
 use crate::{AsarError, AsarFile, AsarHeader, Game, Metadata};
 use flate2::read::DeflateDecoder;
-use std::{
-    collections::HashMap,
-    io::{self, Cursor, Read, Write},
-};
+use std::io::{self, Cursor, Read, Write};
 
 #[derive(Debug)]
 struct ZipEntry {
@@ -32,7 +29,6 @@ fn generate_header(header: &AsarHeader) -> Vec<u8> {
 }
 
 pub fn create_asar(input: &[u8], game: Game, meta: &Metadata) -> Result<Vec<u8>, AsarError> {
-    let mut entries = HashMap::new();
     let reader = Cursor::new(input);
     if let Ok(mut zip) = zip::ZipArchive::new(reader) {
         let mut original_header_line = None;
@@ -90,16 +86,16 @@ pub fn create_asar(input: &[u8], game: Game, meta: &Metadata) -> Result<Vec<u8>,
         }
 
         zip_files.sort_unstable_by_key(|x| x.order);
-        let mut zip_entries = HashMap::with_capacity(zip_files.len());
+        let mut zip_entries = Vec::with_capacity(zip_files.len());
         let mut offset = 0;
         for entry in &zip_files {
-            zip_entries.insert(
+            zip_entries.push((
                 String::from(zip_order[entry.order]),
                 AsarFile {
                     offset,
                     size: entry.size,
                 },
-            );
+            ));
 
             offset += entry.size;
         }
@@ -141,13 +137,13 @@ pub fn create_asar(input: &[u8], game: Game, meta: &Metadata) -> Result<Vec<u8>,
 
         Ok(compressor.into_inner())
     } else {
-        entries.insert(
+        let entries = vec![(
             String::from(meta.filename),
             AsarFile {
                 offset: 0,
                 size: input.len() as u64,
             },
-        );
+        )];
 
         let header = AsarHeader {
             files: entries,

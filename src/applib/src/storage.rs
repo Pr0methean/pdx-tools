@@ -13,13 +13,16 @@ pub enum UniversalContainerError {
     Parse(#[from] asar_save::AsarError),
 }
 
-pub fn to_universal_container<P: AsRef<Path>>(fp: P) -> Result<Vec<u8>, UniversalContainerError> {
+pub fn to_universal_container<P: AsRef<Path>>(
+    fp: P,
+    filename: &str,
+) -> Result<Vec<u8>, UniversalContainerError> {
     let f = File::open(fp.as_ref()).map_err(UniversalContainerError::InvalidFile)?;
     let mmap = unsafe { Mmap::map(&f).map_err(UniversalContainerError::Mmap)? };
     let out = asar_save::create_asar(
         &mmap[..],
         asar_save::Game::Eu4,
-        &asar_save::Metadata { filename: "a" },
+        &asar_save::Metadata { filename },
     )?;
     Ok(out)
 }

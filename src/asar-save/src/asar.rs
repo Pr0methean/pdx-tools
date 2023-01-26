@@ -1,6 +1,6 @@
+use crate::vec_pair::*;
 use crate::AsarArchive;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct AsarFile {
@@ -22,7 +22,12 @@ impl AsarFile {
 
 #[derive(Default, Serialize, Deserialize, Debug, PartialEq)]
 pub struct AsarHeader {
-    pub files: HashMap<String, AsarFile>,
+    #[serde(
+        default,
+        deserialize_with = "deserialize_vec_pair",
+        serialize_with = "serialize_vec_pair"
+    )]
+    pub files: Vec<(String, AsarFile)>,
     pub game: Game,
     pub filename: String,
     #[serde(skip_serializing_if = "Option::is_none")]
