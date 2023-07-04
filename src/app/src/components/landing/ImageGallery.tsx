@@ -73,7 +73,7 @@ const DesktopImageGallery = () => {
 
       <div className="flex flex-grow basis-0 flex-col">
         <div className="mb-3 space-x-4">
-          <h2 className="inline">{selected.title}</h2>
+          <h2 className="inline text-4xl">{selected.title}</h2>
           <span>{selected.description}</span>
         </div>
         {selected.src.endsWith("mp4") ? (

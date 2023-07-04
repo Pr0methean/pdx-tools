@@ -24,7 +24,9 @@ export const UserPage = ({ userId }: UserRouteProps) => {
         <title>{user.user_info.user_name} saves - PDX Tools</title>
       </Head>
       <div className="p-5">
-        <h1 className="text-4xl">{user.user_info.user_name || `User: ${userId}`}</h1>
+        <h1 className="text-4xl">
+          {user.user_info.user_name || `User: ${userId}`}
+        </h1>
         <Descriptions size="small" column={3}>
           <Descriptions.Item label="Joined">
             <TimeAgo date={user.user_info.created_on} />

@@ -1,8 +1,6 @@
 import React, { useMemo } from "react";
-import { Typography, Spin } from "antd";
 import { RecordTable } from "./components/RecordTable";
 import { Achievement, useAchievementQuery } from "@/services/appApi";
-const { Paragraph } = Typography;
 
 interface AchievementRoute {
   achievementId: string;
@@ -36,11 +34,11 @@ export const AchievementPage = ({
     achievement?.description ?? staticAchievement?.description ?? "";
 
   return (
-    <div className="p-5 mx-auto max-w-7xl">
+    <div className="mx-auto max-w-7xl p-5">
       <h1 className="text-4xl">{title}</h1>
       <p>Achievement id: {achievementId}</p>
-      <Paragraph>{description}</Paragraph>
-      {table}
+      <p>{description}</p>
+      <div className="mt-5">{table}</div>
     </div>
   );
 };

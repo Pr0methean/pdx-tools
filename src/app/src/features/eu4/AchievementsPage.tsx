@@ -10,7 +10,7 @@ export const AchievementsPage = ({
   staticAchievements,
 }: AchievementsPageProps) => {
   return (
-    <div className="p-5 mx-auto max-w-5xl">
+    <div className="mx-auto max-w-5xl p-5">
       <h1 className="text-4xl">Achievements</h1>
       <p className="mb-5">EU4 achievements recognized by PDX Tools</p>
       <AchievementsTable

@@ -9,6 +9,7 @@ import { captureException } from "@/features/errors";
 
 export const initializeWasm = wasm.initializeModule;
 export async function fetchData(save: Eu4SaveInput) {
+  console.log("HELO");
   switch (save.kind) {
     case "handle": {
       const file = await save.file.getFile();

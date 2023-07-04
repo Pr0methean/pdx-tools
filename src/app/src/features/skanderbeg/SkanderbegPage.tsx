@@ -24,7 +24,7 @@ export const SkanderbegPage = () => {
   );
 
   return (
-    <div className="mx-auto max-w-5xl p-5 space-y-5">
+    <div className="mx-auto max-w-5xl space-y-5 p-5">
       <h1 className="text-4xl">Skanderbeg</h1>
       <div className="space-y-5">
         <p className="max-w-prose">
@@ -36,7 +36,7 @@ export const SkanderbegPage = () => {
         </p>
         <div className="flex flex-col gap-2">
           <Search
-          className="max-w-prose"
+            className="max-w-prose"
             placeholder="Skanderbeg URL or id"
             enterButton="Analyze"
             size="large"

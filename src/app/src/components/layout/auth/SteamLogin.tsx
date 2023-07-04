@@ -8,7 +8,9 @@ export const SteamLogin = () => {
   const showDrawer = () => setVisible(true);
   return (
     <>
-      <Button onClick={showDrawer}>Login</Button>
+      <Button type="primary" onClick={showDrawer}>
+        Login
+      </Button>
       <Drawer
         title="Welcome back!"
         width={400}
