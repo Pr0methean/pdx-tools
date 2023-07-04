@@ -60,7 +60,7 @@ export const CountryDetailsDrawer = () => {
 
   return (
     <Drawer
-      visible={visible}
+      open={visible}
       closable={true}
       mask={false}
       push={false}
@@ -102,7 +102,7 @@ export const CountryDetailsDrawer = () => {
     >
       <Drawer
         width="min(500px, 100%)"
-        visible={helpVisible}
+        open={helpVisible}
         onClose={() => setHelpVisible(false)}
       >
         <p>Some mana actions are not recorded in the save:</p>

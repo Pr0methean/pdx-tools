@@ -19,7 +19,7 @@ export const ChartSideBarButton = ({
       <VisualizationProvider>
         <SideBarContainerProvider>
           <ChartDrawer
-            visible={drawerVisible}
+            open={drawerVisible}
             closeDrawer={() => setDrawerVisible(false)}
           />
         </SideBarContainerProvider>

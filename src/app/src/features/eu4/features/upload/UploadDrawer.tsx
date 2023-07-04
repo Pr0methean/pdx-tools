@@ -10,7 +10,7 @@ import { closeDrawerPropagation } from "../../components/SideBarContainer";
 import { useEu4Meta, useSaveFilename } from "../../store";
 
 interface UploadDrawerProps {
-  visible: boolean;
+  open: boolean;
   closeDrawer: () => void;
 }
 
@@ -32,7 +32,7 @@ export const UploadDrawerTitle = () => {
   );
 };
 
-export const UploadDrawer = ({ visible, closeDrawer }: UploadDrawerProps) => {
+export const UploadDrawer = ({ open, closeDrawer }: UploadDrawerProps) => {
   return (
     <Drawer
       title={<UploadDrawerTitle />}
@@ -40,8 +40,8 @@ export const UploadDrawer = ({ visible, closeDrawer }: UploadDrawerProps) => {
       closable={true}
       mask={false}
       maskClosable={false}
-      onClose={closeDrawerPropagation(closeDrawer, visible)}
-      visible={visible}
+      onClose={closeDrawerPropagation(closeDrawer, open)}
+      open={open}
       width="min(800px, 100%)"
     >
       <UploadDrawerContent />

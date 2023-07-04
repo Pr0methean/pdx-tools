@@ -53,7 +53,7 @@ export const InfoSideBarButton = ({
           () => setDrawerVisible(false),
           drawerVisible
         )}
-        visible={drawerVisible}
+        open={drawerVisible}
         width="min(800px, 100%)"
       >
         <SideBarContainerProvider>

@@ -26,7 +26,7 @@ export const InheritanceValueBreakdown = ({
         placement="right"
         closable={true}
         onClose={() => setDrawerVisible(false)}
-        visible={drawerVisible}
+        open={drawerVisible}
         width="450px"
       >
         <div className={classes.table}>

@@ -16,7 +16,7 @@ export const MobileMenu = () => {
         placement="right"
         closable={false}
         onClose={() => setMenuVisible(false)}
-        visible={menuVisible}
+        open={menuVisible}
         bodyStyle={{
           backgroundColor: "#001529",
           padding: 0,

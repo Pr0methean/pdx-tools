@@ -17,7 +17,7 @@ export const MapSettingsSideBarButton = ({
     <>
       <SideBarContainerProvider>
         <MapSettingsDrawer
-          visible={drawerVisible}
+          open={drawerVisible}
           closeDrawer={() => setDrawerVisible(false)}
         />
       </SideBarContainerProvider>

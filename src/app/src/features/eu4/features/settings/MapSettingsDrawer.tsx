@@ -6,12 +6,12 @@ import {
 import { MapSettings } from "./MapSettings";
 
 type MapSettingsDrawerProps = {
-  visible: boolean;
+  open: boolean;
   closeDrawer: () => void;
 };
 
 export const MapSettingsDrawer = ({
-  visible,
+  open,
   closeDrawer,
 }: MapSettingsDrawerProps) => {
   const sideBarContainerRef = useSideBarContainerRef();
@@ -22,8 +22,8 @@ export const MapSettingsDrawer = ({
       closable={true}
       mask={false}
       maskClosable={false}
-      onClose={closeDrawerPropagation(closeDrawer, visible)}
-      visible={visible}
+      onClose={closeDrawerPropagation(closeDrawer, open)}
+      open={open}
       width="min(400px, 100%)"
     >
       <div className="flex flex-col gap-2" ref={sideBarContainerRef}>

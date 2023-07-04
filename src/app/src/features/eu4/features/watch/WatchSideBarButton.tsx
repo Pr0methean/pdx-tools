@@ -17,7 +17,7 @@ export const WatchSideBarButton = ({
     <>
       <SideBarContainerProvider>
         <WatchDrawer
-          visible={drawerVisible}
+          open={drawerVisible}
           closeDrawer={() => setDrawerVisible(false)}
         />
       </SideBarContainerProvider>

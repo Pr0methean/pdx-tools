@@ -16,7 +16,7 @@ export const HeaderSideBarButton = ({
         placement="top"
         closable={false}
         onClose={() => setheaderVisible(false)}
-        visible={headerVisible}
+        open={headerVisible}
         contentWrapperStyle={{
           height: "auto",
         }}

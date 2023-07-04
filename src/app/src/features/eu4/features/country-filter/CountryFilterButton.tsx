@@ -19,7 +19,7 @@ export const CountryFilterButton = (props: CountryFilterButtonProps) => {
     <>
       <Button {...btn}></Button>
       <CountryFilterDrawer
-        visible={visible}
+        open={visible}
         closeDrawer={() => setVisible(false)}
       />
     </>

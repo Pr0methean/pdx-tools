@@ -6,19 +6,19 @@ import { HelpTooltip } from "@/components/HelpTooltip";
 import { useTagFilter } from "../../store";
 
 type CountryFilterDrawerProps = {
-  visible: boolean;
+  open: boolean;
   closeDrawer: () => void;
 };
 
 export const CountryFilterDrawer = ({
-  visible,
+  open,
   closeDrawer,
 }: CountryFilterDrawerProps) => {
   const countryFilter = useTagFilter();
 
   return (
     <Drawer
-      visible={visible}
+      open={open}
       onClose={closeDrawer}
       width="min(800px, 100%)"
       title={

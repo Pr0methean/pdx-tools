@@ -19,7 +19,7 @@ export const UploadSideBarButton = ({
       <UploadProvider>
         <SideBarContainerProvider>
           <UploadDrawer
-            visible={drawerVisible}
+            open={drawerVisible}
             closeDrawer={() => setDrawerVisible(false)}
           />
         </SideBarContainerProvider>

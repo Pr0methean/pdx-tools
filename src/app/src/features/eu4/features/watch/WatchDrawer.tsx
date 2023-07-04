@@ -7,11 +7,11 @@ import { useSaveFilename } from "../../store";
 import { WatchContent } from "./WatchContent";
 
 type WatchDrawerProps = {
-  visible: boolean;
+  open: boolean;
   closeDrawer: () => void;
 };
 
-export const WatchDrawer = ({ visible, closeDrawer }: WatchDrawerProps) => {
+export const WatchDrawer = ({ open, closeDrawer }: WatchDrawerProps) => {
   const sideBarContainerRef = useSideBarContainerRef();
   const filename = useSaveFilename();
   return (
@@ -21,8 +21,8 @@ export const WatchDrawer = ({ visible, closeDrawer }: WatchDrawerProps) => {
       closable={true}
       mask={false}
       maskClosable={false}
-      onClose={closeDrawerPropagation(closeDrawer, visible)}
-      visible={visible}
+      onClose={closeDrawerPropagation(closeDrawer, open)}
+      open={open}
       width="min(800px, 100%)"
     >
       <div className="flex flex-col gap-2" ref={sideBarContainerRef}>

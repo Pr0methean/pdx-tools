@@ -39,7 +39,7 @@ export const ProvinceSelectListener = () => {
       title="Province Details"
       placement="right"
       onClose={closeDrawerPropagation(() => setDrawerVisible(false), visible)}
-      visible={visible}
+      open={visible}
       mask={false}
       closable={true}
       width="min(400px, 100%)"

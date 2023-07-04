@@ -12,7 +12,7 @@ export const SteamRegister = () => {
       <Drawer
         title="Register an account with PDX Tools"
         onClose={() => setDrawerOpen(false)}
-        visible={isDrawerOpen}
+        open={isDrawerOpen}
         width={400}
         footer={<Button onClick={() => setDrawerOpen(false)}>Close</Button>}
       >

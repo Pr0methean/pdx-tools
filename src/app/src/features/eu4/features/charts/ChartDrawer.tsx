@@ -11,7 +11,7 @@ import {
 import { ChartDrawerTitle } from "./ChartDrawerTitle";
 
 interface ChartDrawerProps {
-  visible: boolean;
+  open: boolean;
   closeDrawer: () => void;
 }
 
@@ -32,7 +32,7 @@ const vizModuleDisplayLimit = (module: VizModules) => {
 
 const DEFAULT_VIZUALIZATION_SELECTION = "monthly-income";
 
-export const ChartDrawer = ({ visible, closeDrawer }: ChartDrawerProps) => {
+export const ChartDrawer = ({ open, closeDrawer }: ChartDrawerProps) => {
   const [selectedViz, setSelectedViz] = useState<VizModules>(
     DEFAULT_VIZUALIZATION_SELECTION
   );
@@ -43,12 +43,12 @@ export const ChartDrawer = ({ visible, closeDrawer }: ChartDrawerProps) => {
 
   return (
     <Drawer
-      visible={visible}
+      open={open}
       closable={true}
       mask={false}
       maskClosable={false}
       push={!helpVisible}
-      onClose={closeDrawerPropagation(closeDrawer, visible)}
+      onClose={closeDrawerPropagation(closeDrawer, open)}
       width={!expanded ? "min(800px, 100%)" : "100%"}
       title={
         <ChartDrawerTitle
@@ -60,7 +60,7 @@ export const ChartDrawer = ({ visible, closeDrawer }: ChartDrawerProps) => {
         />
       }
     >
-      <Drawer visible={helpVisible} onClose={() => setHelpVisible(false)}>
+      <Drawer open={helpVisible} onClose={() => setHelpVisible(false)}>
         <Help module={selectedViz} />
       </Drawer>
 

@@ -38,7 +38,7 @@ export const DateTimeline = () => {
         max={meta.total_days}
         onChange={dayChange}
         className="grow select-none"
-        tooltipVisible={false}
+        tooltip={{open: false}}
         marks={{
           0: {
             label: meta.start_date,

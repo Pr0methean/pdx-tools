@@ -13,7 +13,7 @@ export const SteamLogin = () => {
         title="Welcome back!"
         width={400}
         onClose={closeDrawer}
-        visible={visible}
+        open={visible}
         footer={<Button onClick={closeDrawer}>Close</Button>}
       >
         <SteamButton />
